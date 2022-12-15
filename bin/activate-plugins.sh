@@ -14,10 +14,6 @@ else
   fi
 fi
 
-curl -LoLogViewer.zip https://plugins.matomo.org/api/2.0/plugins/LogViewer/download/4.1.1
-
-unzip -d plugins  LogViewer.zip
-
 if [[ "$MATOMO_PLUGINS" ]]; then
   IFS=',' read -ra plugins <<<"$MATOMO_PLUGINS"
 
