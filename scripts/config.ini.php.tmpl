@@ -43,6 +43,8 @@ record_statistics = 0
 ; "errorlog" (logs using the error_log() php function) and "syslog" (logs to the syslog service)
 log_writers[] = file
 ; Possible values are ERROR, WARN, INFO, DEBUG
-log_level = DEBUG
+<?php if (getenv('MATOMO_LOG_LEVEL')) { ?>
+log_level = <?php echo getenv('MATOMO_LOG_LEVEL') ?>
+<?php } ?>
 ; if configured to log to file, log entries will be written to this file
 logger_file_path = /tmp/matomo.log
