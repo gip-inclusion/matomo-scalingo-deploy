@@ -12,6 +12,6 @@ bin/activate-plugins.sh
 
 bin/set-matomo-nginx.sh
 
-touch /tmp/matomo.log && tail -F /tmp/matomo.log &
+# touch /tmp/matomo.log && tail -F /tmp/matomo.log &
 
 exec bash bin/run
