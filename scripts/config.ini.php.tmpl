@@ -30,8 +30,11 @@ trusted_hosts[] = <?php echo getenv('MATOMO_HOST') ?>
 multi_server_environment = <?php echo getenv('MATOMO_MULTI_SERVER_ENVIRONMENT') ?>
 <?php } ?>
 
-<?php if (getenv('MATOMO_MAINTENANCE') == 'true') { ?>
 [Tracker]
-record_statistics = 0 
+<?php if (getenv('MATOMO_TRACKER_DEBUG') == 'true') { ?>
+debug=1
+<?php } ?>
+<?php if (getenv('MATOMO_MAINTENANCE') == 'true') { ?>
+record_statistics = 0
 <?php } ?>
 
