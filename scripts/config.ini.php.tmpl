@@ -15,6 +15,10 @@ ssl_ca = "/usr/share/ca-certificates/Scalingo/scalingo-database.pem"
 assume_secure_protocol = 1
 proxy_client_headers[] = HTTP_X_FORWARDED_FOR
 force_ssl = 1
+
+; Scalingo MySQL does not allow LOAD DATA INFILE
+enable_load_data_infile = 0
+
 always_load_commands_from_plugin=DbCommands,AdminCommands,LicenseKeyCommands
 enable_trusted_host_check = 0
 <?php if (getenv('MATOMO_MAINTENANCE') == 'true') { ?>
