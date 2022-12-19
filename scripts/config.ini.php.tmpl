@@ -7,6 +7,9 @@ username = "<?php echo @$db['user']; ?>"
 password = "<?php echo @$db['pass']; ?>"
 dbname = "<?php echo trim(@$db['path'], '/'); ?>"
 port = <?php echo @$db['port'].PHP_EOL; ?>
+enable_ssl = 1
+ssl_no_verify = 1
+ssl_ca = "/usr/share/ca-certificates/Scalingo/scalingo-database.pem"
 
 [General]
 assume_secure_protocol = 1
