@@ -2,6 +2,7 @@ $db = parse_url(getenv('DATABASE_URL'));
 ?>
 
 [database]
+charset = "utf8mb4"
 host = "<?php echo @$db['host']; ?>"
 username = "<?php echo @$db['user']; ?>"
 password = "<?php echo @$db['pass']; ?>"
