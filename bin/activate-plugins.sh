@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Always deactivate default Feedback plugin
+php console plugin:deactivate Feedback
+
 if [[ -z "$MATOMO_LICENSE_KEY" ]]; then
   echo "Not activating purchased plugins because no Matomo plugins API license key defined"
 else
