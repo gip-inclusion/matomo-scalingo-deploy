@@ -27,15 +27,19 @@ maintenance_mode = 1
 <?php } ?>
 
 <?php if (getenv('MATOMO_SALT')) { ?>
-salt = "<?php echo getenv('MATOMO_SALT') ?>"
+salt = "<?php echo getenv('MATOMO_SALT').PHP_EOL; ?>"
 <?php } ?>
 
 <?php if (getenv('MATOMO_HOST')) { ?>
-trusted_hosts[] = <?php echo getenv('MATOMO_HOST') ?>
+trusted_hosts[] = <?php echo getenv('MATOMO_HOST').PHP_EOL; ?>
 <?php } ?>
 
 <?php if (getenv('MATOMO_MULTI_SERVER_ENVIRONMENT')) { ?>
-multi_server_environment = <?php echo getenv('MATOMO_MULTI_SERVER_ENVIRONMENT') ?>
+multi_server_environment = <?php echo getenv('MATOMO_MULTI_SERVER_ENVIRONMENT').PHP_EOL; ?>
+<?php } ?>
+
+<?php if (getenv('SMTP_FROM')) { ?>
+noreply_email_address = <?php echo getenv('SMTP_FROM').PHP_EOL; ?>
 <?php } ?>
 
 [Tracker]
@@ -52,7 +56,23 @@ record_statistics = 0
 log_writers[] = errorlog
 ; Possible values are ERROR, WARN, INFO, DEBUG
 <?php if (getenv('MATOMO_LOG_LEVEL')) { ?>
-log_level = <?php echo getenv('MATOMO_LOG_LEVEL') ?>
+log_level = <?php echo getenv('MATOMO_LOG_LEVEL').PHP_EOL; ?>
 <?php } ?>
 ; if configured to log to file, log entries will be written to this file
 ; logger_file_path = /tmp/matomo.log
+
+[mail]
+transport = smtp
+type = Plain
+<?php if (getenv('SMTP_HOST')) { ?>
+host = <?php echo getenv('SMTP_HOST').PHP_EOL; ?>
+<?php } ?>
+<?php if (getenv('SMTP_PASS')) { ?>
+password = <?php echo getenv('SMTP_PASS').PHP_EOL; ?>
+<?php } ?>
+<?php if (getenv('SMTP_PORT')) { ?>
+port = <?php echo getenv('SMTP_PORT').PHP_EOL; ?>
+<?php } ?>
+<?php if (getenv('SMTP_USER')) { ?>
+username = <?php echo getenv('SMTP_USER').PHP_EOL; ?>
+<?php } ?>

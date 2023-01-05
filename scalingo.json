@@ -27,8 +27,24 @@
       "description": "URL of the initial site sending analytics",
       "required": true
     },
-    "MAIL_URL": {
-      "description": "URL to the mailserver which is going to send Matomo emails",
+    "SMTP_HOST": {
+      "description": "SMTP host for email sending",
+      "required": true
+    },
+    "SMTP_PORT": {
+      "description": "SMTP port for email sending",
+      "required": false
+    },
+    "SMTP_USER": {
+      "description": "SMTP username for email sending",
+      "required": true
+    },
+    "SMTP_PASS": {
+      "description": "SMTP password for email sending",
+      "required": true
+    },
+    "SMTP_FROM": {
+      "description": "Return address for email sending",
       "required": false
     },
     "MATOMO_LICENSE_KEY": {
