@@ -23,7 +23,7 @@ else
       url="https://plugins.matomo.org/api/2.0/plugins/$plugin_name/download/$plugin_version"
 
       echo "Downloading plugin $plugin_name#$plugin_version at $url to $zip_file_location"
-      if curl -X POST -F "access_token=$access_token" -L "${url}" -o "$zip_file_location"; then
+      if curl -s -X POST -F "access_token=$access_token" -L "${url}" -o "$zip_file_location"; then
 
         echo "Unzipping $zip_file_location to $plugins_dir/$plugin_name"
         unzip -q "$zip_file_location" -d "$plugins_dir"
