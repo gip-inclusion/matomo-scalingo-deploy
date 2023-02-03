@@ -53,7 +53,9 @@ record_statistics = 0
 [log]
 ; Possible values are "screen" (default value), "file", "database" (logs to tables logger_*),
 ; "errorlog" (logs using the error_log() php function) and "syslog" (logs to the syslog service)
+<?php if (str_starts_with(getenv('CONTAINER'), 'web-')) { ?>
 log_writers[] = errorlog
+<?php } ?>
 ; Possible values are ERROR, WARN, INFO, DEBUG
 <?php if (getenv('MATOMO_LOG_LEVEL')) { ?>
 log_level = <?php echo getenv('MATOMO_LOG_LEVEL').PHP_EOL; ?>
