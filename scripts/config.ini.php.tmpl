@@ -20,6 +20,9 @@ force_ssl = 1
 ; Scalingo MySQL does not allow LOAD DATA INFILE
 enable_load_data_infile = 0
 
+; Update cannot be done automatically
+enable_auto_update = 0
+
 always_load_commands_from_plugin=DbCommands,AdminCommands,LicenseKeyCommands
 enable_trusted_host_check = 0
 <?php if (getenv('MATOMO_MAINTENANCE') == 'true') { ?>
