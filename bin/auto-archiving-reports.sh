@@ -11,7 +11,7 @@ else
   echo "Start auto-archiving reports CRON job"
   while true; do
     echo "Archiving reports... "
-    php console core:archive --url "https://$MATOMO_HOST"
+    php console core:archive
     echo "done"
     sleep "$MATOMO_AUTO_ARCHIVING_FREQUENCY"
   done

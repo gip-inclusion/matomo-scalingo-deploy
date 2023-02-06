@@ -136,7 +136,6 @@ To enable, auto-archiving reports processing, set the two environment variables 
 
 ```shell script
 MATOMO_AUTO_ARCHIVING_FREQUENCY=3600 # in seconds
-MATOMO_HOST=my-matomo-instance.osc-fr1.scalingo.io # your application host (the https:// is added automatically)
 ```
 
 Think to disable the `Archive reports when viewed from the browser` option in the "Matomo > System > General settings > Archiving settings" menu.

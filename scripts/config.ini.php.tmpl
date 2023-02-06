@@ -37,10 +37,6 @@ maintenance_mode = 1
 salt = "<?php echo getenv('MATOMO_SALT').PHP_EOL; ?>"
 <?php } ?>
 
-<?php if (getenv('MATOMO_HOST')) { ?>
-trusted_hosts[] = <?php echo getenv('MATOMO_HOST').PHP_EOL; ?>
-<?php } ?>
-
 <?php if (getenv('SMTP_FROM')) { ?>
 noreply_email_address = <?php echo getenv('SMTP_FROM').PHP_EOL; ?>
 <?php } ?>
