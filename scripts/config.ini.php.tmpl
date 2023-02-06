@@ -23,6 +23,10 @@ enable_load_data_infile = 0
 ; Update cannot be done automatically
 enable_auto_update = 0
 
+; Always set multi_server_environment which prevents installing plugins from the UI,
+; among other things.
+multi_server_environment = 1
+
 always_load_commands_from_plugin=DbCommands,AdminCommands,LicenseKeyCommands
 enable_trusted_host_check = 0
 <?php if (getenv('MATOMO_MAINTENANCE') == 'true') { ?>
@@ -35,10 +39,6 @@ salt = "<?php echo getenv('MATOMO_SALT').PHP_EOL; ?>"
 
 <?php if (getenv('MATOMO_HOST')) { ?>
 trusted_hosts[] = <?php echo getenv('MATOMO_HOST').PHP_EOL; ?>
-<?php } ?>
-
-<?php if (getenv('MATOMO_MULTI_SERVER_ENVIRONMENT')) { ?>
-multi_server_environment = <?php echo getenv('MATOMO_MULTI_SERVER_ENVIRONMENT').PHP_EOL; ?>
 <?php } ?>
 
 <?php if (getenv('SMTP_FROM')) { ?>
