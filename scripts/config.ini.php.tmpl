@@ -53,14 +53,14 @@ record_statistics = 0
 ; Possible values are "screen" (default value), "file", "database" (logs to tables logger_*),
 ; "errorlog" (logs using the error_log() php function) and "syslog" (logs to the syslog service)
 <?php if (str_starts_with(getenv('CONTAINER'), 'web-')) { ?>
-log_writers[] = errorlog
+log_writers[] = file
 <?php } ?>
 ; Possible values are ERROR, WARN, INFO, DEBUG
 <?php if (getenv('MATOMO_LOG_LEVEL')) { ?>
 log_level = <?php echo getenv('MATOMO_LOG_LEVEL').PHP_EOL; ?>
 <?php } ?>
 ; if configured to log to file, log entries will be written to this file
-; logger_file_path = /tmp/matomo.log
+logger_file_path = /tmp/matomo.log
 
 [mail]
 transport = smtp

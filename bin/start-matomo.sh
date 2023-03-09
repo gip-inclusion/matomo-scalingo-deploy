@@ -14,6 +14,7 @@ bin/set-matomo-nginx.sh
 
 bin/start-tagmanager-generation.sh
 
-# touch /tmp/matomo.log && tail -F /tmp/matomo.log &
+touch /tmp/matomo.log
+tail -n 0 -qF --pid=$$ /tmp/matomo.log 2>&1 &
 
 exec bash bin/run
