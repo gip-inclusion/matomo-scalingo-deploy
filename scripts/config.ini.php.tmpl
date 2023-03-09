@@ -62,6 +62,11 @@ log_level = <?php echo getenv('MATOMO_LOG_LEVEL').PHP_EOL; ?>
 ; if configured to log to file, log entries will be written to this file
 logger_file_path = /tmp/matomo.log
 
+<?php if (getenv('MATOMO_DEBUG_SQL_PROFILER') == 'true') { ?>
+[Debug]
+enable_sql_profiler = 1
+<?php } ?>
+
 [mail]
 transport = smtp
 type = Plain
