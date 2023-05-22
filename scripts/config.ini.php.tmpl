@@ -86,3 +86,97 @@ port = <?php echo getenv('SMTP_PORT').PHP_EOL; ?>
 <?php if (getenv('SMTP_USER')) { ?>
 username = <?php echo getenv('SMTP_USER').PHP_EOL; ?>
 <?php } ?>
+
+
+[Plugins]
+Plugins[] = "CoreVue"
+Plugins[] = "CorePluginsAdmin"
+Plugins[] = "CoreAdminHome"
+Plugins[] = "CoreHome"
+Plugins[] = "WebsiteMeasurable"
+Plugins[] = "IntranetMeasurable"
+Plugins[] = "Diagnostics"
+Plugins[] = "CoreVisualizations"
+Plugins[] = "Proxy"
+Plugins[] = "API"
+Plugins[] = "Widgetize"
+Plugins[] = "Transitions"
+Plugins[] = "LanguagesManager"
+Plugins[] = "Actions"
+Plugins[] = "Dashboard"
+Plugins[] = "MultiSites"
+Plugins[] = "Referrers"
+Plugins[] = "UserLanguage"
+Plugins[] = "DevicesDetection"
+Plugins[] = "Goals"
+Plugins[] = "Ecommerce"
+Plugins[] = "SEO"
+Plugins[] = "Events"
+Plugins[] = "UserCountry"
+Plugins[] = "GeoIp2"
+Plugins[] = "VisitsSummary"
+Plugins[] = "VisitFrequency"
+Plugins[] = "VisitTime"
+Plugins[] = "VisitorInterest"
+Plugins[] = "RssWidget"
+Plugins[] = "Monolog"
+Plugins[] = "Login"
+Plugins[] = "TwoFactorAuth"
+Plugins[] = "UsersManager"
+Plugins[] = "SitesManager"
+Plugins[] = "Installation"
+Plugins[] = "CoreUpdater"
+Plugins[] = "CoreConsole"
+Plugins[] = "ScheduledReports"
+Plugins[] = "UserCountryMap"
+Plugins[] = "Live"
+Plugins[] = "PrivacyManager"
+Plugins[] = "ImageGraph"
+Plugins[] = "Annotations"
+Plugins[] = "MobileMessaging"
+Plugins[] = "Overlay"
+Plugins[] = "SegmentEditor"
+Plugins[] = "Insights"
+Plugins[] = "Morpheus"
+Plugins[] = "Contents"
+Plugins[] = "BulkTracking"
+Plugins[] = "Resolution"
+Plugins[] = "DevicePlugins"
+Plugins[] = "Heartbeat"
+Plugins[] = "Intl"
+Plugins[] = "Marketplace"
+Plugins[] = "UserId"
+Plugins[] = "CustomJsTracker"
+Plugins[] = "Tour"
+Plugins[] = "PagePerformance"
+Plugins[] = "CustomDimensions"
+Plugins[] = "TagManager"
+Plugins[] = "AbTesting"
+Plugins[] = "AdvertisingConversionExport"
+Plugins[] = "FormAnalytics"
+Plugins[] = "HeatmapSessionRecording"
+Plugins[] = "MediaAnalytics"
+Plugins[] = "Provider"
+Plugins[] = "QueuedTracking"
+Plugins[] = "SearchEngineKeywordsPerformance"
+Plugins[] = "SEOWebVitals"
+
+[QueuedTracking]
+notify_queue_threshold_single_queue = 250000
+
+[FormAnalytics]
+max_no_of_form_requests_allowed = 500
+max_no_of_form_submission_requests_allowed = 500
+max_no_of_form_fields_allowed = 2000
+
+[HeatmapSessionRecording]
+add_tracking_code_only_when_needed = 1
+session_recording_sample_limits = "50,100,250,500,1000,2000,5000"
+load_css_from_db = 1
+max_time_allowed_on_page_column_limit = "9.2233720368548E+18"
+
+[MediaAnalytics]
+media_analytics_exclude_query_parameters = "enablejsapi,player_id"
+datatable_archiving_maximum_rows_media = 1000
+datatable_archiving_maximum_rows_subtable_media = 1000
+enable_event_tracking_by_default = 1

@@ -8,8 +8,6 @@ bin/generate-config-ini.sh
 
 bin/set-license-key.sh
 
-bin/activate-plugins.sh
-
 bin/set-matomo-nginx.sh
 
 bin/start-tagmanager-generation.sh
