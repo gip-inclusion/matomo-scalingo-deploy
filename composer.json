@@ -1,9 +1,0 @@
-{
-    "extra": {
-        "paas": {
-            "php-config": [
-                "memory_limit=2G"
-            ]
-        }
-    }
-}
