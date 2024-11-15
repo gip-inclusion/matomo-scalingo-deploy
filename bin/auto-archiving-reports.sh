@@ -1,5 +1,8 @@
 #!/bin/bash
 
+set -e
+set -o pipefail
+
 if [[ -z "$MATOMO_AUTO_ARCHIVING_FREQUENCY" ]]; then
   echo "Auto-archiving reports job disabled"
 else
