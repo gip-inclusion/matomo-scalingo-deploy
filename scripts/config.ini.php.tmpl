@@ -41,6 +41,10 @@ salt = "<?php echo getenv('MATOMO_SALT'); ?>"
 noreply_email_address = <?php echo getenv('SMTP_FROM').PHP_EOL; ?>
 <?php } ?>
 
+<?php if (getenv('MATOMO_MEMORY_LIMIT')) { ?>
+minimum_memory_limit = <?php echo getenv('MATOMO_MEMORY_LIMIT').PHP_EOL; ?>
+<?php } ?>
+
 <?php if (getenv('MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT')) { ?>
 minimum_memory_limit_when_archiving = <?php echo getenv('MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT').PHP_EOL; ?>
 <?php } ?>

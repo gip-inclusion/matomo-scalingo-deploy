@@ -1,2 +1,5 @@
 *.zip
 /vendor/
+.vscode
+.idea
+.history
