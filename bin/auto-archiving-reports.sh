@@ -13,7 +13,11 @@ else
   echo "Start auto-archiving reports CRON job"
   while true; do
     echo "Archiving reports... "
-    php console core:archive
+    if [[ -n "$MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT" ]]; then
+      php -d memory_limit="${MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT}M" console core:archive
+    else
+      php console core:archive
+    fi
     echo "done"
     sleep "$MATOMO_AUTO_ARCHIVING_FREQUENCY"
   done
