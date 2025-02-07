@@ -1,0 +1,9 @@
+{
+  "extra": {
+    "paas": {
+      "php-config": [
+        "memory_limit": "2048M"
+      ],
+    }
+  }
+}
