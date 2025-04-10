@@ -14,9 +14,9 @@ else
   while true; do
     echo "Archiving reports... "
     if [[ -n "$MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT" ]]; then
-      php -d memory_limit="${MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT}M" console core:archive --php-cli-options="-d memory_limit=${MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT}M"
+      php -d memory_limit="${MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT}M" console core:archive --skip-segments-today --php-cli-options="-d memory_limit=${MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT}M" 
     else
-      php console core:archive
+      php console core:archive --skip-segments-today
     fi
     echo "done"
     sleep "$MATOMO_AUTO_ARCHIVING_FREQUENCY"
