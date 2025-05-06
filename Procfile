@@ -1,2 +1,2 @@
 web: bin/start-matomo.sh
-cron: bin/auto-archiving-reports.sh
+clock: bin/auto-archiving-reports.sh
