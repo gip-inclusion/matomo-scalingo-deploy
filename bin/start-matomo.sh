@@ -2,11 +2,7 @@
 
 echo "Starting Matomo application..."
 
-bin/fetch-purchased-plugins.sh
-
-bin/generate-config-ini.sh
-
-bin/set-license-key.sh
+bin/configure-environment.sh
 
 bin/set-matomo-nginx.sh
 
