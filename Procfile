@@ -1,2 +1,2 @@
 web: bin/start-matomo.sh
-clock: bin/auto-archiving-reports.sh
+clock: echo "Clock process works\!"
