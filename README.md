@@ -34,6 +34,20 @@ By default, Stack 20 and 22 of Scalingo run PHP v8.2.1. If you want to specify a
 - set env variable `PHP_VERSION` to the new one ("~8.4")
 - Rebuild and deploy your app
 
+### Increase PHP allowed memory
+
+By default, Scalingo set PHP `memory_limit` to 196Mo for a basic webapp. It is possible to increase the allowed memory limit by defining extra params in a Composer.json file. The problem is that in our case, Matomo webapp is detected and deployed as a "classic" PHP's one.
+
+Scalingo considers two modes:
+- if there is a Composer.json file in the app → Composer app, that triggers Composer build cycle
+- else, if there is an index.php file → Classic PHP app, that does nothing
+
+It is not possible to play with a Composer.json file nor `memory_limit` parameter in a php.ini file with classic mode.
+
+The only way to change the memory limit is to fork Scalingo/php-buildpack repository and to modify conf/php/php.ini file to edit `memory_limit` variable.
+
+| ⚠️ Be careful to specify a value matching your container's size (L=1024M, XL=2G, 2XL=4G) !
+
 #### Override Matomo version
 You want to a different matomo version:
 - set env variable `MATOMO_VERSION` to the new one
