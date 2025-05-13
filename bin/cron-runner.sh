@@ -7,6 +7,7 @@
 # Format: minute hour day month weekday
 JOBS=(
   "0 */6 * * * bash bin/auto-archiving-reports.sh"
+  "* * * * * echo 'It works.'"
   # "*/10 * * * * php script.php"
 )
 
