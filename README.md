@@ -28,6 +28,12 @@ Then follow the steps below:
 
 ### Configuration
 
+#### Select a specific version of PHP
+
+By default, Stack 20 and 22 of Scalingo run PHP v8.2.1. If you want to specify another version, as recommanded by Matomo admin warnings :
+- set env variable `PHP_VERSION` to the new one ("~8.4")
+- Rebuild and deploy your app
+
 #### Override Matomo version
 You want to a different matomo version:
 - set env variable `MATOMO_VERSION` to the new one
