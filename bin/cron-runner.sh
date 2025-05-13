@@ -1,4 +1,6 @@
-#!/usr/bin/env bash
+#!/bin/bash
+
+echo "Launching CRON runner..."
 
 # Simple cron runner without crontab
 # Parses a list of jobs and runs them if their schedule matches current time
