@@ -1,2 +1,2 @@
 web: bin/start-matomo.sh
-clock: php cron.php
+clock: bin/cron-runner.sh
