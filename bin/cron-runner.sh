@@ -2,13 +2,13 @@
 
 echo "Launching CRON runner..."
 
-# Simple cron runner without crontab
-# Parses a list of jobs and runs them if their schedule matches current time
+# Required, in order to generate Matomo config.ini file
+bin/configure-environment.sh
 
 # Define jobs as: "cron_schedule command"
 # Format: minute hour day month weekday
 JOBS=(
-  "* * * * * echo 'It works.'"
+  "*/15 * * * * echo 'CRON runner is up and running.'"
   "0 1,13 * * * php console core:archive --skip-segments-today"
   "0 4 * * * php console core:purge-old-archive-data all && php console database:optimize-archive-tables all"
 )
@@ -34,6 +34,8 @@ while true; do
   CURRENT_MON=$(date +%m)
   CURRENT_DOW=$(date +%u) # 1 (Monday) to 7 (Sunday)
 
+  executed_jobs=()
+
   for job in "${JOBS[@]}"; do
     cron_expr=$(echo "$job" | awk '{print $1,$2,$3,$4,$5}')
     command=$(echo "$job" | cut -d' ' -f6-)
@@ -49,8 +51,21 @@ while true; do
     [[ "$dow" == '*' || "$dow" == "$CURRENT_DOW" ]] || continue
 
     log "Running: $command"
+    executed_jobs+=("$command")
     eval "$command"
   done
+
+  # Summary every 15 minutes
+  if (( 10#$CURRENT_MIN % 15 == 0 )); then
+    if [ ${#executed_jobs[@]} -gt 0 ]; then
+      echo "[CRON] Summary at $(date '+%Y-%m-%d %H:%M'): executed jobs:"
+      for cmd in "${executed_jobs[@]}"; do
+        echo "  - $cmd"
+      done
+    else
+      echo "[CRON] Summary at $(date '+%Y-%m-%d %H:%M'): no job executed."
+    fi
+  fi
 
   sleep 60
 done
