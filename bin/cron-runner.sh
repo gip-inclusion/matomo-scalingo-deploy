@@ -2,15 +2,17 @@
 
 echo "Launching CRON runner..."
 
+bin/configure-environment.sh
+
 # Simple cron runner without crontab
 # Parses a list of jobs and runs them if their schedule matches current time
 
 # Define jobs as: "cron_schedule command"
 # Format: minute hour day month weekday
 JOBS=(
-  "0 */6 * * * bash bin/auto-archiving-reports.sh"
   "* * * * * echo 'It works.'"
-  # "*/10 * * * * php script.php"
+  "25 */1 * * * php console core:archive --skip-segments-today"
+  "0 4 * * * php console core:purge-old-archive-data all && php console database:optimize-archive-tables all"
 )
 
 log() {
@@ -43,8 +45,8 @@ while true; do
     IFS=' ' read -r min hour dom mon dow <<< "$cron_expr"
 
     # Check each field
-    [[ "$min" == '*' || "$min" == "$CURRENT_MIN" || "$min" == "*/"* && $((10#"$CURRENT_MIN" % ${min#*/})) -eq 0 ]] || continue
-    [[ "$hour" == '*' || "$hour" == "$CURRENT_HOUR" || "$hour" == "*/"* && $((10#"$CURRENT_HOUR" % ${hour#*/})) -eq 0 ]] || continue
+    [[ "$min" == '*' || "$min" == "$CURRENT_MIN" || ( "$min" == "*/"* && $((10#"$CURRENT_MIN" % ${min#*/})) -eq 0 ) ]] || continue
+    [[ "$hour" == '*' || "$hour" == "$CURRENT_HOUR" || ( "$hour" == "*/"* && $((10#"$CURRENT_HOUR" % ${hour#*/})) -eq 0 ) ]] || continue
     [[ "$dom" == '*' || "$dom" == "$CURRENT_DOM" ]] || continue
     [[ "$mon" == '*' || "$mon" == "$CURRENT_MON" ]] || continue
     [[ "$dow" == '*' || "$dow" == "$CURRENT_DOW" ]] || continue
