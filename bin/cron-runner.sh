@@ -2,8 +2,6 @@
 
 echo "Launching CRON runner..."
 
-bin/configure-environment.sh
-
 # Simple cron runner without crontab
 # Parses a list of jobs and runs them if their schedule matches current time
 
@@ -11,7 +9,7 @@ bin/configure-environment.sh
 # Format: minute hour day month weekday
 JOBS=(
   "* * * * * echo 'It works.'"
-  "25 */1 * * * php console core:archive --skip-segments-today"
+  "0 1,13 * * * php console core:archive --skip-segments-today"
   "0 4 * * * php console core:purge-old-archive-data all && php console database:optimize-archive-tables all"
 )
 
@@ -19,15 +17,14 @@ log() {
   echo "[CRON $(date '+%Y-%m-%d %H:%M:%S')] $*"
 }
 
-# Function to convert cron fields to regex
-cron_field_to_regex() {
-  field=$1
-  case "$field" in
-    '*') echo '.*' ;;
-    */*) echo "$field" ;;
-    *) echo "^$field$" ;;
-  esac
-}
+# Print all cron jobs at launch
+echo "Defined CRON jobs:"
+for job in "${JOBS[@]}"; do
+  cron_expr=$(echo "$job" | awk '{print $1,$2,$3,$4,$5}')
+  command=$(echo "$job" | cut -d' ' -f6-)
+  echo "  → At '$cron_expr' → $command"
+done
+echo ""
 
 # Run forever
 while true; do
