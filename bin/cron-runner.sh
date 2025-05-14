@@ -9,7 +9,9 @@ bin/configure-environment.sh
 # Format: minute hour day month weekday
 JOBS=(
   "*/15 * * * * echo 'CRON runner is up and running.'"
-  "30 11 * * * php console core:archive --skip-segments-today"
+  "5 */2 * * * php console core:archive --force-idsites 117,136,146,214 --skip-segments-today --concurrent-requests-per-website 10 --concurrent-archivers 3"
+  "10 */2 * * * php console core:archive --force-idsites 206,211,221 --skip-segments-today --concurrent-requests-per-website 10 --concurrent-archivers 3"
+  "15 */2 * * * php console core:archive --force-idsites 207,217,212 --skip-segments-today --concurrent-requests-per-website 10 --concurrent-archivers 3"
   "0 4 * * * php console core:purge-old-archive-data all && php console database:optimize-archive-tables all"
 )
 
