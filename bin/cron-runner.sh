@@ -36,6 +36,10 @@ while true; do
   CURRENT_MON=$(date +%m)
   CURRENT_DOW=$(date +%u) # 1 (Monday) to 7 (Sunday)
 
+  # Normalize hour/min to remove leading zero for integer comparisons
+  CURRENT_MIN=$((10#$CURRENT_MIN))
+  CURRENT_HOUR=$((10#$CURRENT_HOUR))
+
   executed_jobs=()
 
   for job in "${JOBS[@]}"; do
@@ -46,8 +50,8 @@ while true; do
     IFS=' ' read -r min hour dom mon dow <<< "$cron_expr"
 
     # Check each field
-    [[ "$min" == '*' || "$min" == "$CURRENT_MIN" || ( "$min" == "*/"* && $((10#"$CURRENT_MIN" % ${min#*/})) -eq 0 ) ]] || continue
-    [[ "$hour" == '*' || "$hour" == "$CURRENT_HOUR" || ( "$hour" == "*/"* && $((10#"$CURRENT_HOUR" % ${hour#*/})) -eq 0 ) ]] || continue
+    [[ "$min" == '*' || "$min" == "$CURRENT_MIN" || ( "$min" == "*/"* && $((CURRENT_MIN % ${min#*/})) -eq 0 ) ]] || continue
+    [[ "$hour" == '*' || "$hour" == "$CURRENT_HOUR" || ( "$hour" == "*/"* && $((CURRENT_HOUR % ${hour#*/})) -eq 0 ) ]] || continue
     [[ "$dom" == '*' || "$dom" == "$CURRENT_DOM" ]] || continue
     [[ "$mon" == '*' || "$mon" == "$CURRENT_MON" ]] || continue
     [[ "$dow" == '*' || "$dow" == "$CURRENT_DOW" ]] || continue
@@ -58,7 +62,7 @@ while true; do
   done
 
   # Summary every 15 minutes
-  if (( 10#$CURRENT_MIN % 15 == 0 )); then
+  if (( CURRENT_MIN % 15 == 0 )); then
     if [ ${#executed_jobs[@]} -gt 0 ]; then
       echo "[CRON] Summary at $(date '+%Y-%m-%d %H:%M'): executed jobs:"
       for cmd in "${executed_jobs[@]}"; do
