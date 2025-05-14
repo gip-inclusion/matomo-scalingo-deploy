@@ -49,6 +49,9 @@ minimum_memory_limit = <?php echo getenv('MATOMO_MEMORY_LIMIT').PHP_EOL; ?>
 minimum_memory_limit_when_archiving = <?php echo getenv('MATOMO_AUTO_ARCHIVING_MEMORY_LIMIT').PHP_EOL; ?>
 <?php } ?>
 
+archiving_ranking_query_row_limit = 0
+minimum_memory_limit_when_archiving = -1
+
 [Tracker]
 <?php if (getenv('MATOMO_TRACKER_DEBUG') == 'true') { ?>
 debug=1
