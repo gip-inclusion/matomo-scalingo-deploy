@@ -59,11 +59,6 @@
       "description": "The plugins to install",
       "required": false
     },
-    "MATOMO_AUTO_ARCHIVING_FREQUENCY": {
-      "description": "Number of seconds between two reports auto-archiving",
-      "required": false,
-      "value": "3600"
-    },
     "MATOMO_GENERAL_SALT": {
       "description": "Encryption salt used by Matomo",
       "generator": "secret"
