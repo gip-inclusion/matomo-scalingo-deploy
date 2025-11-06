@@ -9,7 +9,7 @@ bin/configure-environment.sh
 # Format: minute hour day month weekday
 JOBS=(
   "*/15 * * * * echo 'CRON runner is up and running.'"
-  "5 */4 * * * php console core:archive --skip-segments-today --concurrent-requests-per-website 8"
+  "5 */4 * * * php console core:archive --skip-segments-today --concurrent-requests-per-website 3"
   "0 6 * * * php console core:purge-old-archive-data all && php console database:optimize-archive-tables all"
 )
 
