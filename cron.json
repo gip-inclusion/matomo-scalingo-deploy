@@ -1,0 +1,12 @@
+{
+  "jobs": [
+    {
+      "command": "5 */4 * * * bin/cron-runner.sh \"php console core:archive --skip-segments-today --concurrent-requests-per-website 3\"",
+      "size": "2XL"
+    },
+    {
+      "command": "0 6 * * * bin/cron-runner.sh \"php console core:purge-old-archive-data all && php console database:optimize-archive-tables all\"",
+      "size": "2XL"
+    }
+  ]
+}
