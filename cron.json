@@ -1,6 +1,10 @@
 {
   "jobs": [
     {
+      "command": "*/10 * * * * bin/cron-runner.sh \"php console list ; php console core:version ; php console plugin:list ; php console diagnostics:analyze-archive-table\"",
+      "size": "S"
+    },
+    {
       "command": "5 */4 * * * bin/cron-runner.sh \"php console core:archive --skip-segments-today --concurrent-requests-per-website 3\"",
       "size": "2XL"
     },
