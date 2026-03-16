@@ -1,7 +1,7 @@
 {
   "jobs": [
     {
-      "command": "*/10 * * * * bin/cron-runner.sh \"php console list ; php console core:version ; php console plugin:list ; php console diagnostics:analyze-archive-table\"",
+      "command": "*/10 * * * * bin/cron-runner.sh \"php console list ; php console core:version ; php console plugin:list ; php console diagnostics:analyze-archive-table $(date +%Y_%m)\"",
       "size": "S"
     },
     {
