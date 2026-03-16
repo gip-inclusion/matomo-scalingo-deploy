@@ -150,9 +150,9 @@ By default, archive reports are processed when viewed from the browser.
 
 > For medium to high traffic websites, it is recommended to disable Matomo archiving to trigger from the browser. Instead, Matomo recommends that you setup a cron job to process reports every hour.
 
-This project comes with a pre-configured scheduled task, see command "cron" in the `Procfile` and the script `cron-runner.sh`
+This project comes with pre-configured Scalingo scheduled tasks in `cron.json`.
 
-To enable, auto-archiving reports processing setup a clock instance to run `cron-runner.sh`
+To enable auto-archiving reports processing, deploy the app with `cron.json` included.
 Think to disable the `Archive reports when viewed from the browser` option in the "Matomo > System > General settings > Archiving settings" menu.
 
 ### Configuring DBIP/GEOIP2
