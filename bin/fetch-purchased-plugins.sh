@@ -50,3 +50,5 @@ else
     download_plugin "${plugin%%:*}" "${plugin##*:}" "$MATOMO_LICENSE_KEY" "$plugins_dir"
   done
 fi
+
+bin/patch-rebeloidc.sh
