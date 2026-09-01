@@ -10,6 +10,7 @@ PURCHASED_PLUGINS=(
 )
 
 FREE_PLUGINS=(
+  "RebelOIDC:5.1.6"
 )
 
 download_plugin() {
