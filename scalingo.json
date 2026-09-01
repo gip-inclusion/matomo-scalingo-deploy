@@ -47,16 +47,21 @@
       "description": "Return address for email sending",
       "required": false
     },
+    "MATOMO_VERSION": {
+      "description": "Matomo version downloaded by the buildpack at build time",
+      "required": true,
+      "value": "5.13.0"
+    },
     "MATOMO_LICENSE_KEY": {
       "description": "Matomo API key used for fetching purchased plugins",
       "required": false
     },
-    "MATOMO_PURCHASED_PLUGINS": {
-      "description": "Your purchased Matomo plugins",
+    "REBELOIDC_CLIENT_ID": {
+      "description": "Authentik OAuth client ID for RebelOIDC",
       "required": false
     },
-    "MATOMO_PLUGINS": {
-      "description": "The plugins to install",
+    "REBELOIDC_CLIENT_SECRET": {
+      "description": "Authentik OAuth client secret for RebelOIDC",
       "required": false
     },
     "MATOMO_GENERAL_SALT": {
