@@ -1,180 +1,53 @@
 # Matomo-scalingo-deploy
 
-[Matomo](https://matomo.org) is a free and open source web analytics application, designed to be an open and compliant with GDPR alternative to Google Analytics.
+Fork du [buildpack betagouv](https://github.com/betagouv/matomo-buildpack).
 
-[Scalingo](https://scalingo.com) is a high-availability Platform as a Service (PaaS), like Heroku or Dokku.
+## Premier lancement
 
-This project is now based on [betagouv matomo-buildpack](https://github.com/betagouv/matomo-buildpack).
+- creer une app scalingo
+- la lier à ce repo
+- remplir les variables Scalingo :
+  - obligatoires au premier deploy : `MATOMO_INIT_USER_*`, `MATOMO_INIT_SITE_*`, `SMTP_HOST`, `SMTP_USER`, `SMTP_PASS`, `MATOMO_VERSION`
+  - plugins premium : `MATOMO_LICENSE_KEY`
+  - recommandées : `MATOMO_SALT`, `MATOMO_MEMORY_LIMIT` (ex. `512M`), `PHP_VERSION` (ex. `~8.4`)
+- déployer
 
-It was inspired by the PaaS buildpack [1024 pix matomo-buildpack](https://github.com/1024pix/matomo-buildpack).
+Note : Au tout premier déploiement, Scalingo lance `bin/first-deploy-init.sh` (déclaré dans `scalingo.json`).
+Cela déclanche la création des tables, du superutilisateur et du site initial.
 
-## Usage
+## Configuration
 
-### Installation
+Seuls certains secrets et la version de MAtomo sont configurés dans Scalingo.
+Le reste est versionné en dur ici car peu de mises à jour.
 
-As a pre-requesites, you must be connected to a valid (with a valid payment method) Scalingo account.
+- version Matomo : `scalingo.json`, variable `MATOMO_VERSION` obligatoire
+- versions des plugins : tableaux en tête de `bin/fetch-purchased-plugins.sh`
+- réglages & plugins actifs : `scripts/config.ini.php.tmpl`
 
-[![Deploy to Scalingo](https://cdn.scalingo.com/deploy/button.svg)](https://my.scalingo.com/deploy?source=https://github.com/betagouv/matomo-scalingo-deploy)
+La mise à jour auto depuis l'admin Matomo et l'installation de plugins depuis l'UI sont désactivées dans la config.
 
-Then follow the steps below:
+## OIDC
 
-1. Fork this repository
-2. From the GitHub interface of your fork, edit the `README.md` file and change the "Deploy to Scalingo" href link to your repository's one
-3. Save, commit and push your change
-4. Click on the "one-click deployment" button above ; you will be redirected to the Scalingo new application interface
-5. Fill-up the form about the Matomo application environment variables and follow the instructions
+Avant de déployer :
 
-![Scalingo new Matomo app form](assets/scalingo_new_matomo_app_form.png)
-
-### Configuration
-
-#### Select a specific version of PHP
-
-By default, Stack 20 and 22 of Scalingo run PHP v8.2.1. If you want to specify another version, as recommanded by Matomo admin warnings :
-- set env variable `PHP_VERSION` to the new one ("~8.4")
-- Rebuild and deploy your app
-
-### Increase PHP allowed memory
-
-By default, Scalingo set PHP `memory_limit` to 196Mo for a basic webapp. It is possible to increase the allowed memory limit by defining extra params in a Composer.json file. The problem is that in our case, Matomo webapp is detected and deployed as a "classic" PHP's one.
-
-Scalingo considers two modes:
-- if there is a Composer.json file in the app → Composer app, that triggers Composer build cycle
-- else, if there is an index.php file → Classic PHP app, that does nothing
-
-It is not possible to play with a Composer.json file nor `memory_limit` parameter in a php.ini file with classic mode.
-
-The only way to change the memory limit is to fork Scalingo/php-buildpack repository and to modify conf/php/php.ini file to edit `memory_limit` variable.
-
-| ⚠️ Be careful to specify a value matching your container's size (L=1024M, XL=2G, 2XL=4G) !
-
-#### Override Matomo version
-You want to a different matomo version:
-- set env variable `MATOMO_VERSION` to the new one
-- Rebuild and deploy your app
-- Then upgrade database: execute an one-off container with `bash bin/first-deploy-init.sh`
-
-#### Override Matomo config
-
-To update the matomo config, edit the config file `scripts/config.ini.php.tmpl`.
-If you have secrets, set environnement variables and use them in the `scripts/config.ini.php.tmpl` file. For instance, we set the `MATOMO_SALT` this way.
-
-#### Activating plugins
-
-Set the environnement variable `MATOMO_PLUGINS` with a comma separated plugin list name. For instance you can enable the DbCommands, AdminCommands and LicenseKeyCommands plugins with `MATOMO_PLUGINS=DbCommands,AdminCommands,LicenseKeyCommands`.
-
-#### Manage Purchased plugins
-
-If not yet done, set the environment variable `MATOMO_LICENSE_KEY` with your own [Matomo license key](https://fr.matomo.org/faq/how-to/how-do-i-get-a-license-key-for-the-maxmind-geolocation-database/) in your Scalingo app.
-
-Then, declare your purchased plugins by setting the `MATOMO_PURCHASED_PLUGINS` environment variable as below:
-
-```shell script
-MATOMO_PURCHASED_PLUGINS=Funnels:3.1.22,ActivityLog:3.4.0,RollUpReporting:3.2.7
-```
-
-> Unfortunately, the Matomo plugins API does not provide a way to fetch the latest version of a given plugin for a given version à of Matomo (3.X or 4.X). It is why we must precise the version of each plugin.
-
-### Upgrade
-
-> ⚠️ We strongly advise you to **not use the auto-update feature in the Matomo administration** interface at the risk of lose all your changes and having critical problems the next time your app will restart! 
-
-There is multiple ways to upgrade your Matomo instance:
-- a) change the env variable MATOMO_VERSION in your setting to the new one, rebuild/deploy and execute `bash bin/first-deploy-init.sh` in an on/off container
-- b) wait for the [original repository](https://my.scalingo.com/deploy?source=https://github.com/betagouv/matomo-scalingo-deploy) to upgrade the current version and rebase your fork on it
-- c) wait for [matomo buildpack](https://github.com/betagouv/matomo-buildpack) to release a new version and change yourself the buidpack in `./buildpacks` file
-
-## Advanced usage
-
-### Playing with the Matomo console
-
-Matomo provides a [CLI console](https://developer.matomo.org/guides/piwik-on-the-command-line) within its distribution.
-
-This program is written in PHP and requires such an environment to work.
-
-You can easily access and run the Matomo console commands in a [Scalingo one-off container](https://doc.scalingo.com/platform/app/tasks). But in order to do it, you must previously regenerate the `/app/config/config.ini.php` file, in the same way as the `bin/start-matomo.sh` script.
-
-```shell script
-scalingo --app my-matomo-instance run bash # run a one-off container
-./bin/generate-config-ini.sh # generate the /app/config/config.ini.php file
-php console list # list all the Matomo console commands
-```
-
-### Exploring the database
-
-First, run a one-off Scalingo container that loads the MySQL CLI:
-
-```shell script
-scalingo --app my-matomo-instance mysql-console # run a one-off container
-```
-
-Then, connect to your Matomo database and enjoy your MySQL commands.
-
-```shell script
-mysql> show databases; # list MySQL databases
-mysql> use my_matomo_i_4515; # select the current database
-mysql> show tables; # list all the DB tables
-```
-
-### Force SSL
-
-According to the [Matomo documentation](https://fr.matomo.org/faq/how-to/faq_91/):
-
-> Configuring Matomo (Piwik) so that all requests are made over SSL (https://) is an easy way to improve security and keep your data safer.
-
-In the Scalingo app environment, add the environment variable:
+- vérifier le slug d'application "matomo" dans Authentik (cf. `endSessionUrl`)
+- ajouter `REBELOIDC_CLIENT_ID` et `REBELOIDC_CLIENT_SECRET` sur Scalingo
+- enregistrer l'URL de callback côté Authentik :
 
 ```
-MATOMO_GENERAL_FORCE_SSL=1
+https://<url-de-matomo>/index.php?module=RebelOIDC&action=callback&provider=oidc
 ```
 
-Save your configuration and restart your application. That's it!
+- mettre `.*` dans les Redirect URIs du provider dans Authentik (le point devant est important, voir la [FAQ du plugin](https://plugins.matomo.org/RebelOIDC))
 
-### Disable Matomo Tracking
+## Mise à jour
 
-According to the [Matomo documentation](https://matomo.org/faq/how-to/faq_111/):
+1. Modifier les versions dans le repo (`scalingo.json`, `fetch-purchased-plugins.sh`, tmpl si besoin), committer.
+2. Couper le tracking le temps de la migration : `MATOMO_MAINTENANCE=true`, et monter la mémoire si besoin (`MATOMO_MEMORY_LIMIT=512`).
+3. Pousser sur `main`: Scalingo déploie, le postdeploy lance `configure-environment.sh` et `core:update --yes`.
+4. En one-off, relancer `bin/configure-environment.sh` puis `php console core:update --yes -vvv` pour vérifier.
+5. Remettre `MATOMO_MAINTENANCE=false`.
 
-> Before a Database upgrade on a high traffic Matomo (Piwik) server, it is highly recommended to disable Matomo Tracking.
+## Licence
 
-In the Scalingo app environment, add the environment variable:
-
-```
-MATOMO_TRACKER_RECORD_STATISTICS=0
-```
-
-Save your configuration and restart your application. That's it!
-
-### Configuring a (recommended) auto-archiving CRON job
-
-By default, archive reports are processed when viewed from the browser.
-
-> For medium to high traffic websites, it is recommended to disable Matomo archiving to trigger from the browser. Instead, Matomo recommends that you setup a cron job to process reports every hour.
-
-This project comes with pre-configured Scalingo scheduled tasks in `cron.json`.
-
-To enable auto-archiving reports processing, deploy the app with `cron.json` included.
-Think to disable the `Archive reports when viewed from the browser` option in the "Matomo > System > General settings > Archiving settings" menu.
-
-### Configuring DBIP/GEOIP2
-
-To download and install DBIP (dbip-city-lite-YYYY-MM.mmdb.gz) , set the variable and rebuild your app.
-
-```shell script
-MATOMO_GEO_DBIP=true
-```
-
-The dbip-city-lite-YYYY-MM.mmdb.gz file is installed in `misc/`
-
-Then, enable "DBIP/GeoIP 2" in matomo System menu to activate this provider
-
-### Configuring e-mail sending
-
-TODO…
-
-### Configuring multi-servers
-
-TODO…
-
-## Licensing
-
-This project is licensed under the [AGPL-3.0 license](https://choosealicense.com/licenses/agpl-3.0/) license.
+AGPL-3.0
