@@ -133,6 +133,7 @@ Plugins[] = "VisitorInterest"
 Plugins[] = "RssWidget"
 Plugins[] = "Monolog"
 Plugins[] = "Login"
+Plugins[] = "RebelOIDC"
 Plugins[] = "TwoFactorAuth"
 Plugins[] = "UsersManager"
 Plugins[] = "SitesManager"
@@ -194,3 +195,16 @@ enable_event_tracking_by_default = 1
 funnels_num_max_rows_in_actions = 100
 funnels_num_max_rows_in_referrers = 50
 funnels_num_max_rows_populate_at_once = 60000
+
+[RebelOIDC]
+authenticationName = "Inclusion Connect"
+authorizeUrl = "https://connect.inclusion.gouv.fr/application/o/authorize/"
+tokenUrl = "https://connect.inclusion.gouv.fr/application/o/token/"
+userInfoUrl = "https://connect.inclusion.gouv.fr/application/o/userinfo/"
+endSessionUrl = "https://connect.inclusion.gouv.fr/application/o/matomo/end-session/"
+scope = "openid email"
+userInfoId = "sub"
+autoLinking = 1
+bypassTwoFa = 1
+clientId = "${REBELOIDC_CLIENT_ID}"
+clientSecret = "${REBELOIDC_CLIENT_SECRET}"
