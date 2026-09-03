@@ -11,6 +11,7 @@ PURCHASED_PLUGINS=(
 
 FREE_PLUGINS=(
   "RebelOIDC:5.1.6"
+  "ForceOIDCLogin:0.1.2"
 )
 
 download_plugin() {
