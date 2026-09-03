@@ -40,6 +40,9 @@ https://<url-de-matomo>/index.php?module=RebelOIDC&action=callback&provider=oidc
 
 - mettre `.*` dans les Redirect URIs du provider dans Authentik (le point devant est important, voir la [FAQ du plugin](https://plugins.matomo.org/RebelOIDC))
 
+Le plugin [ForceOIDCLogin](https://plugins.matomo.org/ForceOIDCLogin) redirige la page login vers Inclusion Connect.
+Bypass d'urgence mot de passe : `index.php?module=Login&action=login&normal=1`
+
 ## Mise à jour
 
 1. Modifier les versions dans le repo (`scalingo.json`, `fetch-purchased-plugins.sh`, tmpl si besoin), committer.
