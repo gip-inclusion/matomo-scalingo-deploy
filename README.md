@@ -47,8 +47,8 @@ Bypass d'urgence mot de passe : `index.php?module=Login&action=login&normal=1`
 
 1. Modifier les versions dans le repo (`scalingo.json`, `fetch-purchased-plugins.sh`, tmpl si besoin), committer.
 2. Couper le tracking le temps de la migration : `MATOMO_MAINTENANCE=true`, et monter la mémoire si besoin (`MATOMO_MEMORY_LIMIT=512`).
-3. Pousser sur `main`: Scalingo déploie, le postdeploy lance `configure-environment.sh` et `core:update --yes`.
-4. En one-off, relancer `bin/configure-environment.sh` puis `php console core:update --yes -vvv` pour vérifier.
+3. Pousser sur `main`: Scalingo déploie, le postdeploy lance `bin/configure-environment.sh`.
+4. En one-off, relancer `bin/configure-environment.sh` pour vérifier.
 5. Remettre `MATOMO_MAINTENANCE=false`.
 
 ## Licence
