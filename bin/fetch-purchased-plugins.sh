@@ -1,12 +1,12 @@
 #!/bin/bash
 
 PURCHASED_PLUGINS=(
+  "AbTesting:5.6.0"
+  "FormAnalytics:5.4.0"
+  "Funnels:5.5.1"
+  "HeatmapSessionRecording:5.7.2"
+  "MediaAnalytics:5.0.17"
   "QueuedTracking:5.2.0"
-  "HeatmapSessionRecording:5.3.3"
-  "FormAnalytics:5.1.3"
-  "AbTesting:5.5.1"
-  "MediaAnalytics:5.0.13"
-  "Funnels:5.3.12"
 )
 
 FREE_PLUGINS=(
