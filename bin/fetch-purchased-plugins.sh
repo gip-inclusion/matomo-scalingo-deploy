@@ -26,9 +26,9 @@ download_plugin() {
   rm -f "$zip_file_location"
   echo "Downloading plugin $plugin_name#$plugin_version at $url"
   if [[ -n "$access_token" ]]; then
-    curl -s -X POST -F "access_token=$access_token" -L "${url}" -o "$zip_file_location"
+    curl -sfL -G --data-urlencode "access_token=$access_token" "${url}" -o "$zip_file_location"
   else
-    curl -s -L "${url}" -o "$zip_file_location"
+    curl -sfL "${url}" -o "$zip_file_location"
   fi
 
   echo "Unzipping $zip_file_location to $plugins_dir/$plugin_name"
