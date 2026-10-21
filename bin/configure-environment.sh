@@ -8,5 +8,7 @@ php console custom-matomo-js:update
 php console core:clear-caches
 php console core:update --yes
 for plugin in RebelOIDC ForceOIDCLogin AbTesting FormAnalytics Funnels HeatmapSessionRecording MediaAnalytics QueuedTracking; do
-  [ -d "./plugins/$plugin" ] && php console plugin:install "$plugin" --yes
+  if [ -d "./plugins/$plugin" ]; then
+    php console plugin:install-or-update "$plugin"
+  fi
 done
